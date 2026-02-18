@@ -1,23 +1,25 @@
-let draggedElement = null;
+let sourceDrag = null;
 
-const images = document.querySelectorAll(".image");
+document.querySelectorAll('[id^="drag"]').forEach(drag => {
 
-images.forEach(img => {
-
-  img.addEventListener("mousedown", () => {
-    draggedElement = img;
-    img.classList.add("selected");
+  drag.addEventListener("mousedown", () => {
+    sourceDrag = drag;
   });
 
-  img.addEventListener("mouseup", () => {
-    if (!draggedElement || draggedElement === img) return;
+  drag.addEventListener("mouseup", () => {
+    if (!sourceDrag || sourceDrag === drag) return;
 
-    // swap background images
-    const tempBg = draggedElement.style.backgroundImage;
-    draggedElement.style.backgroundImage = img.style.backgroundImage;
-    img.style.backgroundImage = tempBg;
+    const sourceDiv = sourceDrag.querySelector("div");
+    const targetDiv = drag.querySelector("div");
 
-    draggedElement.classList.remove("selected");
-    draggedElement = null;
+    const sourceImg = sourceDiv.querySelector("img");
+    const targetImg = targetDiv.querySelector("img");
+
+    // swap images
+    const tempSrc = sourceImg.src;
+    sourceImg.src = targetImg.src;
+    targetImg.src = tempSrc;
+
+    sourceDrag = null;
   });
 });
