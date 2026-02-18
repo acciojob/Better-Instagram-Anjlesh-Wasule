@@ -1,23 +1,23 @@
-let dragged = null;
+let draggedElement = null;
 
-const items = document.querySelectorAll(".image");
+const images = document.querySelectorAll(".image");
 
-items.forEach(item => {
+images.forEach(img => {
 
-  item.addEventListener("mousedown", () => {
-    dragged = item;
-    item.classList.add("selected");
+  img.addEventListener("mousedown", () => {
+    draggedElement = img;
+    img.classList.add("selected");
   });
 
-  item.addEventListener("mouseup", (e) => {
-    if (!dragged || dragged === item) return;
+  img.addEventListener("mouseup", () => {
+    if (!draggedElement || draggedElement === img) return;
 
     // swap background images
-    const temp = dragged.style.backgroundImage;
-    dragged.style.backgroundImage = item.style.backgroundImage;
-    item.style.backgroundImage = temp;
+    const tempBg = draggedElement.style.backgroundImage;
+    draggedElement.style.backgroundImage = img.style.backgroundImage;
+    img.style.backgroundImage = tempBg;
 
-    dragged.classList.remove("selected");
-    dragged = null;
+    draggedElement.classList.remove("selected");
+    draggedElement = null;
   });
 });
